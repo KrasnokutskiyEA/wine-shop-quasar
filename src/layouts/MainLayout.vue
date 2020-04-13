@@ -101,7 +101,7 @@ export default {
           header
           class="text-grey-8"
         >
-          Essential Linksx
+          Essential Links
         </q-item-label>
         <EssentialLink
           v-for="link in essentialLinks"
