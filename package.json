@@ -10,6 +10,7 @@
   "scripts": {
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore ./",
     "test": "echo \"No test specified\" && exit 0",
+    "build": "quasar build -m ssr",
     "heroku-postbuild": "ls -la"
   },
   "dependencies": {
