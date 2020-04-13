@@ -10,8 +10,8 @@
   "scripts": {
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore ./",
     "test": "echo \"No test specified\" && exit 0",
-    "heroku-postbuild": "quasar build -m ssr; cd dist/ssr",
-    "start": "npm run start"
+    "heroku-postbuild": "quasar build -m ssr",
+    "start": "cd dist/ssr; echo \"-----STARTING APP----\"; npm run start"
 
   },
   "dependencies": {
