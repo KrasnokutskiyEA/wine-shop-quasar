@@ -1,6 +1,6 @@
 <template>
   <div id="q-app">
-    <router-view />
+    <router-view :key="$route.params.id" />
   </div>
 </template>
 
