@@ -1,0 +1,9 @@
+version: '3.3'
+
+services:
+
+  ui:
+    image: 1vshnukrshna/winesh:v13
+    restart: always
+    ports:                                                  
+      - 3000:3000                                               
