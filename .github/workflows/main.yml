@@ -8,18 +8,24 @@ on:
       - master
 
 jobs:
-  my_testing:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
+      
+    - name: Docker login
+      env:
+        DOCKERHUB_LOGIN: ${{ secrets.DOCKERHUB_LOGIN }}
+        DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+      run: |
+        docker login -u $DOCKERHUB_LOGIN -p $DOCKERHUB_PASSWORD
 
     - name: Docker build
       run: |
         docker build -t 1vshnukrshna/winesh:latest .
 
-    # - name: Run a multi-line script
-      # run: |
-      #   echo Add other actions to build,
-      #   echo test, and deploy your project.
+    - name: Docker push
+      run: |
+        docker push 1vshnukrshna/winesh:latest
 
