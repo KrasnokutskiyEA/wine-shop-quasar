@@ -1,5 +1,8 @@
 # Wine-shop (wine-shop-quasar)
 
+Status of Last Deployment:<br>
+<img src="https://github.com/KrasnokutskiyEA/wine-shop-quasar/workflows/CI/badge.svg?branch=master"><br>
+
 A Quasar Framework app
 
 ## Install the dependencies
