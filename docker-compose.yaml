@@ -3,13 +3,15 @@ version: '3.3'
 services:
 
   ui:
-    image: 1vshnukrshna/winesh:v14
+    image: 1vshnukrshna/winesh:latest
     container_name: ui
     restart: always
     ports:                                                  
       - 3000:3000
     networks:
-      - app-network                                 
+      - app-network
+    labels:
+      - com.centurylinklabs.watchtower.enable=true                        
 
   webserver:
     image: nginx:mainline-alpine
@@ -17,11 +19,13 @@ services:
     restart: unless-stopped
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - web-root:/var/www/html
       - ./nginx-conf:/etc/nginx/conf.d
       - certbot-etc:/etc/letsencrypt
       - certbot-var:/var/lib/letsencrypt
+      - dhparam:/etc/ssl/certs
     depends_on:
       - ui
     networks:
@@ -36,7 +40,15 @@ services:
       - web-root:/var/www/html
     depends_on:
       - webserver
-    command: certonly --webroot --webroot-path=/var/www/html --email KrasnokutskiyEA@yandex.ru --agree-tos --no-eff-email --staging -d krasnokutsky.tech -d www.krasnokutsky.tech
+    command: certonly --webroot --webroot-path=/var/www/html --email KrasnokutskiyEA@yandex.ru --agree-tos --no-eff-email --force-renewal -d krasnokutsky.tech -d www.krasnokutsky.tech
+
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --label-enable --cleanup --interval 30
+    restart: always
 
 volumes:
   certbot-etc:
@@ -47,7 +59,13 @@ volumes:
       type: none
       device: /root/views/
       o: bind
+  dhparam:
+    driver: local
+    driver_opts:
+      type: none
+      device: /root/dhparam/
+      o: bind
 
 networks:
   app-network:
-    driver: bridge 
+    driver: bridge
